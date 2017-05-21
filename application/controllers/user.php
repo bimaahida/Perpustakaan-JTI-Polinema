@@ -38,7 +38,7 @@ class User extends CI_Controller {
                 $data = array(
                     'nama' => $this->input->post('nama'),
                     'nip' => $this->input->post('nip'),
-                    'password' => $this->input->post('nip'),
+                    'password' => md5($this->input->post('nip')),
                     'alamat' => $this->input->post('alamat'),
                     'tlp' => $this->input->post('tlp'),
                     'tgl_lahir' => $this->input->post('tgl_lahir'),
@@ -98,6 +98,11 @@ class User extends CI_Controller {
 		}
 	}
 
+    public function delete($id){
+		$this->user_model->delete($id);
+		redirect('user/');
+	}
+
     public function validation(){
 		//load library	
 		$this->form_validation->set_rules('nip', 'Nip / Nis', 'numeric|trim|required');
@@ -116,6 +121,7 @@ class User extends CI_Controller {
 
         $this->load->library('upload', $config);
     }
+
 
 }
 

@@ -21,27 +21,38 @@ class Login extends CI_Controller {
         if($this->form_validation->run()==FALSE){
 			 $this->load->view('login'); 
 		}else{ 
-            $nip = $this->input->post('nip');
-            $password = $this->input->post('password');
-			$user = $this->user_model->login($nip,$password);
-            if (!empty($user)){
-                if($user[0]->status === '1'){
-                    echo "admin";
-                }else{
-                    echo 'mahasiswa';
-                }
-                //echo $user[0]->nama;
-                //var_dump($user) ;
+            $user = $this->session->get_userdata('logged_in');
+            //var_dump($user);  
+            if($user['logged_in']['status'] === '1'){
+                echo 'admin';
             }else{
-                 $this->load->view('login'); 
+                echo 'mahasiswa';
             }
 		}
        
     }
+    public function cekDB($password){
+        $nip = $this->input->post('nip');
+        $user = $this->user_model->login($nip,md5($password));
+        if (!empty($user)){
+            $sess_array=array(
+                'id'=>$user[0]->id,
+                'username'=>$user[0]->nip,
+                'status'=>$user[0]->status
+            );
+            $this->session->set_userdata('logged_in',$sess_array);
+            return true;
+            //echo $user[0]->nama;
+            //var_dump($user) ;
+        }else{
+                $this->session->set_message('CekDb','Login Gagal Username Dan Password tidak Valid');
+                return false;
+        }
+    }
     public function validation(){
 		//load library	
 		$this->form_validation->set_rules('nip', 'Nip / Nis', 'numeric|trim|required');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|callback_cekDB');
 	}
 
 }
