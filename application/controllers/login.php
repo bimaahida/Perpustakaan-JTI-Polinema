@@ -55,6 +55,14 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'trim|required|callback_cekDB');
 	}
 
+    public function logout(){
+        $this->session->unset_userdata('logged_in');
+        $this->session->sess_desrtoy();
+        
+        redirect('login','refresh')
+        
+    }
+
 }
 
 /* End of file Controllername.php */
