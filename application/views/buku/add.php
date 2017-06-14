@@ -1,6 +1,6 @@
 <section id="main-content">
           <section class="wrapper">
-          	<h3><i class="fa fa-angle-right"></i> buku</h3>
+              <h3><i class="fa fa-angle-right"></i> Buku</h3>
             <div class="row mt">
                         <div class="col-lg-12">
                         <div class="form-panel">
@@ -11,6 +11,12 @@
                                     <label class="col-sm-2 col-sm-2 control-label">Judul</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="judul">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 col-sm-2 control-label">Kode</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="kode">
                                     </div>
                                 </div>
                                 <div class="form-group">

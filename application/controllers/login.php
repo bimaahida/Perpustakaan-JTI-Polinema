@@ -23,11 +23,9 @@ class Login extends CI_Controller {
 		}else{ 
             $user = $this->session->get_userdata('logged_in');
             //var_dump($user);  
-            if($user['logged_in']['status'] === '1'){
-                echo 'admin';
-            }else{
-                echo 'mahasiswa';
-            }
+            
+            redirect('buku','refresh');
+            
 		}
        
     }
@@ -37,15 +35,17 @@ class Login extends CI_Controller {
         if (!empty($user)){
             $sess_array=array(
                 'id'=>$user[0]->id,
-                'username'=>$user[0]->nip,
-                'status'=>$user[0]->status
+                'nip'=>$user[0]->nip,
+                'status'=>$user[0]->status,
+                'nama'=>$user[0]->nama,
+                'foto'=>$user[0]->foto
             );
             $this->session->set_userdata('logged_in',$sess_array);
             return true;
             //echo $user[0]->nama;
             //var_dump($user) ;
         }else{
-                $this->session->set_message('CekDb','Login Gagal Username Dan Password tidak Valid');
+                $this->form_validation->set_message('cekDB','Login Gagal Username Dan Password tidak Valid');
                 return false;
         }
     }
@@ -57,9 +57,8 @@ class Login extends CI_Controller {
 
     public function logout(){
         $this->session->unset_userdata('logged_in');
-        $this->session->sess_desrtoy();
         
-        redirect('login','refresh')
+        redirect('login','refresh');
         
     }
 

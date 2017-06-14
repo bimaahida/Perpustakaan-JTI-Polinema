@@ -11,7 +11,40 @@ class buku_model extends CI_Model {
 
 		public function getBuku()
 		{
-			$query = $this->db->get('buku');
+			$this->db->select('buku.id,buku.judul,buku.pengarang,buku.tahun_terbit,buku.id_buku,COUNT(buku.judul) as jumlah');    
+			$this->db->from('buku');
+			$this->db->join('pinjam', 'pinjam.id_buku = buku.id_buku','left');
+			$where = "pinjam.id_buku IS NULL or pinjam.status = 0";
+			$this->db->where($where);
+			$this->db->distinct();
+			$this->db->group_by('buku.judul'); 
+			$this->db->order_by("buku.id","desc");
+			
+			$query = $this->db->get();
+			
+			return $query->result();
+		}
+		public function getBukuByKategori($kategori){
+			$this->db->select('buku.id,buku.judul,buku.pengarang,buku.tahun_terbit,buku.id_buku');    
+			$this->db->from('buku');
+			$this->db->join('pinjam', 'pinjam.id_buku = buku.id_buku','left');
+			$this->db->where('buku.id_kategori',$kategori);
+			$this->db->distinct();
+			
+			$query = $this->db->get();
+			
+			return $query->result();
+		}
+
+		public function getBukuByPenerbit($penerbit){
+			$this->db->select('buku.id,buku.judul,buku.pengarang,buku.tahun_terbit,buku.id_buku');    
+			$this->db->from('buku');
+			$this->db->join('pinjam', 'pinjam.id_buku = buku.id_buku','left');
+			$this->db->where('buku.id_penerbit',$penerbit);
+			$this->db->distinct();
+			
+			$query = $this->db->get();
+			
 			return $query->result();
 		}
 
@@ -38,6 +71,19 @@ class buku_model extends CI_Model {
 			return $query->result();
 
 		}
+		public function getBukuByIdDetail($id)
+		{
+			$this->db->select('buku.foto,buku.id,buku.judul,buku.pengarang,penerbit.nama as penerbit,buku.tahun_terbit,kategori.nama as kategori,buku.id_buku');    
+			$this->db->from('buku');
+			$this->db->join('kategori', 'kategori.id = buku.id_kategori');
+			$this->db->join('penerbit', 'penerbit.id = buku.id_penerbit');
+			$this->db->where('buku.id',$id);
+			
+			$query = $this->db->get();
+			
+			return $query->result();
+
+		}
 
 		public function updateById($id,$data)
 		{
@@ -46,8 +92,23 @@ class buku_model extends CI_Model {
 		}
 		
 		public function delete($id){
+			$this->db->where('id_buku',$id);
+			$this->db->delete('buku');
+		}
+		public function deleteById($id){
 			$this->db->where('id',$id);
 			$this->db->delete('buku');
+		}
+
+		public function cek_id($id){
+			$this->db->select('id_buku');
+			$where = "id_buku like '".$id."_'";
+			$this->db->where($where);
+			$this->db->from('buku');
+
+			$query = $this->db->get();
+			
+			return $query->result();
 		}
 
 }

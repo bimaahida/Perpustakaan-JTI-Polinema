@@ -6,6 +6,18 @@ class Penerbit extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+		
+		$this->load->library('acl');
+        $data = $this->session->userdata('logged_in');
+        $status = $data['status'];
+
+        if (! $this->acl->is_public('penerbit'))
+        {
+            if (! $this->acl->is_allowed('penerbit', $status))
+            {
+                redirect('login/logout','refresh');
+            }
+        }
         
         $this->load->model('penerbit_model');
         
@@ -59,10 +71,23 @@ class Penerbit extends CI_Controller {
 		$this->penerbit_model->delete($id);
 		redirect('penerbit/');
 	}
+	
+	public function validation_delete($id){
+        $this->load->model('buku_model');
+        $data['data'] =  $this->buku_model->getBukuByPenerbit($id);
+        if(count($data['data']) >0){
+            $this->load->view('layout/header');
+            $this->load->view('layout/menus');
+            $this->load->view('buku/list',$data);
+            $this->load->view('layout/footer'); 
+        }else{
+            $this->delete($id);
+        }
+	}
 
     public function validation(){
 		//load library	
-		$this->form_validation->set_rules('nama', 'Nama', 'alpha|trim|required');
+		$this->form_validation->set_rules('nama', 'Nama', 'alpha_numeric_spaces|trim|required');
 
     }
 }

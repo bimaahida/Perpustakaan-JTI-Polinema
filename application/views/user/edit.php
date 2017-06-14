@@ -4,8 +4,8 @@
             <div class="row mt">
                         <div class="col-lg-12">
                         <div class="form-panel">
-                            <h4 class="mb"><i class="fa fa-angle-right"></i> Form Add</h4>
-                                <?php echo form_open_multipart('user/update/'.$this->uri->segment(3),'class="form-horizontal style-form"'); ?>
+                            <h4 class="mb"><i class="fa fa-angle-right"></i> Form Edit</h4>
+                            <?php echo form_open_multipart('user/update/'.$this->uri->segment(3),'class="form-horizontal style-form"'); ?>
                                 <?php echo validation_errors(); ?>
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label">Nama</label>
@@ -41,20 +41,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label">Foto </label>
                                     <div class="col-sm-10">
-                                        <input type="file" class="form-control" id="foto" name="foto" value="<?php echo $user[0]->foto; ?>">
+                                        <input type="file" class="form-control" id="foto" name="foto">
                                     </div>
                                 </div>
+                                <input type="hidden" class="form-control" id="foto_lama" name="foto_lama" value="<?php echo $user[0]->foto; ?>">
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label">Status</label>
                                     <div class="col-sm-10">
                                         <select class="form-control"  name="status">
-                                            <option value='0' <?php if($user[0]->status=='0'){echo 'selected';} ?>>Admin</option>
-                                            <option value='1' <?php if($user[0]->status=='1'){echo 'selected';} ?>>User</option>
+                                            <option value='1' <?php if($user[0]->status=='1'){echo 'selected';} ?>>Admin</option>
+                                            <option value='2' <?php if($user[0]->status=='2'){echo 'selected';} ?>>User</option>
                                         </select>
                                     </div>
                                 </div>
                                 
-                                <button type="submit" class="btn btn-theme">Sign in</button>
+                                <button type="submit" class="btn btn-theme">Edit</button>
                            <?php echo form_close();?>  
                         </div>
                         </div><!-- col-lg-12-->      	

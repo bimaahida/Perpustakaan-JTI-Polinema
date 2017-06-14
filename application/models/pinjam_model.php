@@ -14,23 +14,24 @@ class pinjam_model extends CI_Model {
 			$this->db->select('pinjam.id,pinjam.tgl_pinjam,pinjam.tgl_kembali,user.nama,buku.judul');    
 			$this->db->from('pinjam');
 			$this->db->join('user', 'pinjam.id_user = user.id');
-			$this->db->join('buku', 'pinjam.id_buku = buku.id');
+			$this->db->join('buku', 'pinjam.id_buku = buku.id_buku');
 			$this->db->where('pinjam.status', '1');
+			$this->db->order_by("id","desc");
 			
 			$query = $this->db->get();
 			
 			return $query->result();
 		}
-		public function count_pinjam($id_peminjam){
-			$this->db->where('id_user', $id_peminjam);
-			$this->db->where('status', '1');
-			$this->db->from('pinjam');
-			if($this->db->count_all_results() >= 5){
+		public function count_pinjam($peminjam){
+			$this->db->where('id_user',$peminjam);
+			$this->db->where('status','1');
+			$query = $this->db->count_all_results('pinjam');
+			if($query >= 5){
 				return false;
 			}else{
 				return true;
 			}
-		} 
+		}
 
 		public function insertpinjam($data)
 		{
@@ -50,6 +51,34 @@ class pinjam_model extends CI_Model {
 		{
 			$this->db->where('id', $id);
 			$this->db->update('pinjam', $data);
+		}
+
+		public function getPinjamByBuku($id)
+		{
+			$this->db->select('pinjam.id,pinjam.tgl_pinjam,pinjam.tgl_kembali,user.nama,buku.judul');    
+			$this->db->from('pinjam');
+			$this->db->join('user', 'pinjam.id_user = user.id');
+			$this->db->join('buku', 'pinjam.id_buku = buku.id_buku');
+			$this->db->where('pinjam.id_buku', $id);
+			$this->db->order_by("id","desc");
+			
+			$query = $this->db->get();
+			
+			return $query->result();
+		}
+
+		public function getPinjamByUser($id)
+		{
+			$this->db->select('pinjam.id,pinjam.tgl_pinjam,pinjam.tgl_kembali,user.nama,buku.judul');    
+			$this->db->from('pinjam');
+			$this->db->join('user', 'pinjam.id_user = user.id');
+			$this->db->join('buku', 'pinjam.id_buku = buku.id_buku');
+			$this->db->where('pinjam.id_user', $id);
+			$this->db->order_by("id","desc");
+			
+			$query = $this->db->get();
+			
+			return $query->result();
 		}
 		
 		public function delete($id){

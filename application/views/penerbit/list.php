@@ -1,6 +1,7 @@
 <section id="main-content">
         <section class="wrapper">
             <h3><i class="fa fa-angle-right"></i> Penerbit</h3>
+			<a class="btn btn-info" href="<?php echo site_url('penerbit/create')?>" role="button">Tambah Penerbit</a>
 		  		<div class="row mt">
 			  		<div class="col-lg-12">
                       <div class="content-panel" style="padding: 10px;">
@@ -28,8 +29,8 @@
 										<td><?php echo $i; ?></td>
 										<td><?php echo $key->nama ?></td>
 										<td>
-											<a href="<?php echo site_url('kategori/update/').$key->id ?>" type="button" class="btn btn-warning">Edit</a>
-											<a href="<?php echo site_url('kategori/delete/').$key->id ?>" type="button" class="btn btn-danger" onClick="return confirm('Data <?php echo $key->nama ?> akan dihapus ?');">Delete</a>
+											<a href="<?php echo site_url('penerbit/update/').$key->id ?>" type="button" class="btn btn-warning">Edit</a>
+											<a href="<?php echo site_url('penerbit/validation_delete/').$key->id.'/pen' ?>" type="button" class="btn btn-danger" onClick="return confirm('Data <?php echo $key->nama ?> akan dihapus ?');">Delete</a>
 										</td>
 									</tr>
                                     <?php $i++; ?>

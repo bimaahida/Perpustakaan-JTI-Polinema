@@ -46,6 +46,15 @@ class user_model extends CI_Model {
 			return $query->result();
 		}  
 
+		public function search_name($string){
+			$this->db->select('id,nama as label,id as value');
+			$this->db->like('nama', $string);
+			$query = $this->db->get('user');
+
+			return $query->result();
+			
+		}
+
 }
 
 /* End of file kategori_model.php */

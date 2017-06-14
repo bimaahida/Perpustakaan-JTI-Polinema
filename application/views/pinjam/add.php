@@ -10,13 +10,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label">Peminjam</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" name="peminjam">
+                                        <input type="text" class="form-control" name="pinjam" id="pinjam"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label">Buku </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="buku" name="buku">
+                                        <input type="text" class="form-control" name="buku" id="buku"/>
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-theme">Tambah</button>
@@ -24,5 +24,24 @@
                         </div>
                         </div><!-- col-lg-12-->      	
                     </div><!-- /row -->
-                </section><! --/wrapper -->
+                </section><!--/wrapper -->
 </section><!-- /MAIN CONTENT -->
+ <script>
+  $(document).ready(function(){ 
+    $( "#pinjam" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax( {
+          url: "search_peminjam",
+          dataType: "json",
+          data: {
+            term: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
+        } );
+      },
+      minLength: 2,
+    } );
+  } );
+  </script>

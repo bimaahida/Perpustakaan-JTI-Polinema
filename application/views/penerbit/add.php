@@ -6,7 +6,7 @@
                         <div class="form-panel">
                             <h4 class="mb"><i class="fa fa-angle-right"></i> Form Add</h4>
                             <?php echo validation_errors(); ?>
-                                <?php echo form_open('kategori/create/'); ?>
+                                <?php echo form_open('penerbit/create/'); ?>
                                 <div class="form-group">
                                     <label class="col-sm-2 col-sm-2 control-label">Nama</label>
                                     <div class="col-sm-10">

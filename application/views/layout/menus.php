@@ -6,12 +6,15 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-              
-              	  <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-              	  <h5 class="centered">Nama</h5>
+                    <?php 
+                        //var_dump($this->session->all_userdata()); 
+                        $data = $this->session->userdata('logged_in');
+                    ?>
+              	  <p class="centered"><a href="profile.html"><img src="<?php echo base_url('') ?>assets/upload/<?php echo $data['foto'] ?>" class="img-circle" width="60"></a></p>
+              	  <h5 class="centered"><?php echo $data['nama'] ?></h5>
               	  	
                   <li class="mt">
-                      <a href="index.html">
+                      <a href="<?php echo site_url('buku') ?>">
                           <i class="fa fa-dashboard"></i>
                           <span>Dashboard</span>
                       </a>
@@ -20,67 +23,46 @@
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-desktop"></i>
-                          <span>User</span>
+                          <span>Buku</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="general.html">General</a></li>
-                          <li><a  href="buttons.html">Buttons</a></li>
-                          <li><a  href="panels.html">Panels</a></li>
+                          <li><a  href="<?php echo site_url('buku') ?>">Data Buku</a></li>
+                          <?php if($data['status'] == 1){  ?>
+                          <li><a  href="<?php echo site_url('buku/create') ?>">Tambah Buku</a></li>
+                          <li><a  href="<?php echo site_url('kategori') ?>">Kategori</a></li>
+                          <li><a  href="<?php echo site_url('penerbit') ?>">Penerbit</a></li>
+                          <?php } ?>
                       </ul>
                   </li>
-
+                  <?php if($data['status'] == 1){  ?>
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-cogs"></i>
-                          <span>Components</span>
+                          <span>User</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="calendar.html">Calendar</a></li>
-                          <li><a  href="gallery.html">Gallery</a></li>
-                          <li><a  href="todo_list.html">Todo List</a></li>
+                          <li><a  href="<?php echo site_url('user/create') ?>">Tambah User</a></li>
+                          <li><a  href="<?php echo site_url('user') ?>">Data User</a></li>
                       </ul>
                   </li>
+                  <?php } ?>
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-book"></i>
-                          <span>Extra Pages</span>
+                          <span>Transaksi</span>
                       </a>
                       <ul class="sub">
-                          <li><a  href="blank.html">Blank Page</a></li>
-                          <li><a  href="login.html">Login</a></li>
-                          <li><a  href="lock_screen.html">Lock Screen</a></li>
+                      <li>
+                      <?php if($data['status'] == 2){  ?>
+                      <a  href="<?php echo site_url('user/get_history/'.$data['id']) ?>">Data Pinjam</a></li>
+                      <?php } ?>
+                        <?php if($data['status'] == 1){  ?>
+                          <li><a  href="<?php echo site_url('peminjam/create') ?>">Pinjam</a></li>
+                          <li><a  href="<?php echo site_url('peminjam') ?>">Data Pinjam</a></li>
+                          <li><a  href="<?php echo site_url('kembali') ?>">Data Kembali</a></li>
+                        <?php } ?>
                       </ul>
                   </li>
-                  <li class="sub-menu">
-                      <a class="active" href="javascript:;" >
-                          <i class="fa fa-tasks"></i>
-                          <span>Forms</span>
-                      </a>
-                      <ul class="sub">
-                          <li class="active"><a  href="form_component.html">Form Components</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-th"></i>
-                          <span>Data Tables</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="basic_table.html">Basic Table</a></li>
-                          <li><a  href="responsive_table.html">Responsive Table</a></li>
-                      </ul>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class=" fa fa-bar-chart-o"></i>
-                          <span>Charts</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="morris.html">Morris</a></li>
-                          <li><a  href="chartjs.html">Chartjs</a></li>
-                      </ul>
-                  </li>
-
               </ul>
               <!-- sidebar menu end-->
           </div>

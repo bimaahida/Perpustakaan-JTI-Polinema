@@ -25,16 +25,27 @@
 								</thead>
 								<tbody>
                                 <?php $i = 1; ?>
-								<?php foreach ($data as $key) { ?>
+								<?php foreach ($data as $key) { 
+								$tanggal_pinjam= date_create($key->tgl_pinjam);
+								$tanggal_kembali= date_create($key->tgl_kembali);
+								?>
                                 
 									<tr>
 										<td><?php echo $i; ?></td>
-										<td><?php echo $key->tgl_pinjam ?></td>
-										<td><?php echo $key->tgl_kembali ?></td>
+										<td><?php echo date_format($tanggal_pinjam,"d/m/Y") ?></td>
+										<td><?php echo date_format($tanggal_kembali,"d/m/Y") ?></td>
 										<td><?php echo $key->nama ?></td>
 										<td><?php echo $key->judul ?></td>
 										<td>
-											<a href="<?php echo site_url('kategori/update/').$key->id ?>" type="button" class="btn btn-warning">Edit</a>
+											<?php  if($this->uri->segment(2) === 'validation_delete'){?>
+												<?php  if($this->uri->segment(4) === 'user'){?>
+													<a href="<?php echo site_url('peminjam/delete/').$key->id.'/'.$this->uri->segment(3).'/user' ?>" type="button" class="btn btn-danger">Delete</a>
+												<?php }else{?>
+													<a href="<?php echo site_url('peminjam/delete/').$key->id.'/'.$this->uri->segment(3).'/buku' ?>" type="button" class="btn btn-danger">Delete</a>
+												<?php }?>
+											<?php }?>
+											<?php  if($this->uri->segment(1) === 'peminjam'){?><a href="<?php echo site_url('kembali/update/').$key->id ?>" type="button" class="btn btn-warning">Kembalikan</a><?php }?>
+											
 										</td>
 									</tr>
                                     <?php $i++; ?>

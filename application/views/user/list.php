@@ -34,7 +34,7 @@
 										<td>
 											<a href="<?php echo site_url('user/detail/').$key->id ?>" type="button" class="btn btn-info">Detail</a>
 											<a href="<?php echo site_url('user/update/').$key->id ?>" type="button" class="btn btn-warning">Edit</a>
-											<a href="<?php echo site_url('user/delete/').$key->id ?>" type="button" class="btn btn-danger" onClick="return confirm('Data <?php echo $key->nama ?> akan dihapus ?');">Delete</a>
+											<a href="<?php echo site_url('user/validation_delete/').$key->id.'/user' ?>" type="button" class="btn btn-danger" onClick="return confirm('Data <?php echo $key->nama ?> akan dihapus ?');">Delete</a>
 										</td>
 									</tr>
 								<?php } ?>

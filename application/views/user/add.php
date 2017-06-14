@@ -48,8 +48,8 @@
                                     <label class="col-sm-2 col-sm-2 control-label">Status</label>
                                     <div class="col-sm-10">
                                         <select class="form-control"  name="status">
-                                            <option value='0'>Admin</option>
-                                            <option value='1'>User</option>
+                                            <option value='1'>Admin</option>
+                                            <option value='2'>User</option>
                                         </select>
                                     </div>
                                 </div>
