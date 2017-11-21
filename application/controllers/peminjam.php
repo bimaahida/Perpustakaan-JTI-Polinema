@@ -33,7 +33,7 @@ class peminjam extends CI_Controller {
         $this->load->view('layout/footer'); 
     }
 
-    public function cekDB($peminjam){
+    public function cekDB($peminjam){  
 		$hasil = $this->pinjam_model->count_pinjam($peminjam);
 		if($hasil){
 			return true;
@@ -42,6 +42,16 @@ class peminjam extends CI_Controller {
 			return false;
 		}
 	}
+
+    public function cekbuku($id){
+        $hasil = $this->pinjam_model->cek_bukuPinjam($id);
+		if($hasil){
+			return true;
+		}else{
+			$this->form_validation->set_message('cekbuku','Buku Sedang Di Pinjam');			
+			return false;
+		}
+    }
 
     public function search_peminjam(){
         
@@ -58,9 +68,24 @@ class peminjam extends CI_Controller {
 		
     }
 
+    public function search_buku(){
+        
+        $json = [];
+        $input = $_GET['term'];
+        $this->load->model('buku_model');
+        
+
+        if(!empty($input)){
+			$json = $this->buku_model->search_judul($input);
+		}
+        //var_dump($input);
+        echo json_encode($json);
+		
+    }
+
     public function create(){
 		$this->form_validation->set_rules('pinjam', 'Peminjam', 'trim|required|callback_cekDB');
-        $this->form_validation->set_rules('buku', 'Buku', 'trim|required');
+        $this->form_validation->set_rules('buku', 'Buku', 'trim|required|callback_cekbuku');
 
 		if($this->form_validation->run()==FALSE){
 			  $this->load->view('layout/header');

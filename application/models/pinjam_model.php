@@ -32,6 +32,16 @@ class pinjam_model extends CI_Model {
 				return true;
 			}
 		}
+		public function cek_bukuPinjam($id){
+			$this->db->where('id_buku', $id);
+			$this->db->where('status','1');	
+			$query = $this->db->count_all_results('pinjam');
+			if($query >=1){
+				return false;
+			}else{
+				return true;
+			}
+		}
 
 		public function insertpinjam($data)
 		{

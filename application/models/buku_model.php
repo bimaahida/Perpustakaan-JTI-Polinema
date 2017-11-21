@@ -110,7 +110,18 @@ class buku_model extends CI_Model {
 			
 			return $query->result();
 		}
-
+		public function search_judul($string){
+			$this->db->select('buku.id,judul as label,buku.id_buku as value');
+			$this->db->from('buku');
+			$this->db->join('pinjam', 'pinjam.id_buku = buku.id_buku','left');
+			$where = "buku.judul like '%".$string."%'";
+			$this->db->where($where);
+			
+			$query = $this->db->get();
+			
+			return $query->result();
+			
+		}
 }
 
 /* End of file kategori_model.php */

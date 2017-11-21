@@ -43,5 +43,20 @@
       },
       minLength: 2,
     } );
+    $( "#buku" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax( {
+          url: "search_buku",
+          dataType: "json",
+          data: {
+            term: request.term
+          },
+          success: function( data ) {
+            response( data );
+          }
+        } );
+      },
+      minLength: 2,
+    } );
   } );
   </script>
